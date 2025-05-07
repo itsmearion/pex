@@ -4,7 +4,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 # Baca root word dari file eksternal (Mega Vocabulary List)
-def load_kbbi_roots(filepath="kbbi.txt"):
+def load_kbbi(filepath="kbbi.txt"):
     with open(filepath, 'r', encoding='utf-8') as file:
         return [line.strip() for line in file if line.strip()]
 
