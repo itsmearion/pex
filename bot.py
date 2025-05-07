@@ -34,7 +34,7 @@ def stylize(word):
             new_word += ch
     return new_word
 
-BOT_TOKEN = "7827575711:AAHOQ_X4OXblDldXXuokx76exkwPvhpli3g"  # Ganti dengan token bot Telegram lo
+BOT_TOKEN = "7827575711:AAFgns-tzy_zEWf48iFQycaaJuFy9ylkgBE"  # Ganti dengan token bot Telegram lo
 CHECK_URL = "https://api.telegram.org/bot{}/getChat?username=@{}"
 
 def is_username_available(username):
