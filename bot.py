@@ -3,38 +3,52 @@ import requests
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Baca root word dari file eksternal (Mega Vocabulary List)
+# Load kata dari kbbi.txt
 def load_kbbi(filepath="kbbi.txt"):
     with open(filepath, 'r', encoding='utf-8') as file:
         return [line.strip() for line in file if line.strip()]
 
-# Alternatif huruf stylized
+# Huruf stylized lengkap a-z
 stylized = {
     "a": ["a", "q", "x", "h"],
+    "b": ["b", "v", "p"],
+    "c": ["c", "k", "s"],
+    "d": ["d", "t"],
     "e": ["e", "i", "y"],
-    "i": ["i", "y"],
+    "f": ["f", "v", "ph"],
+    "g": ["g", "q", "k"],
+    "h": ["h", "x"],
+    "i": ["i", "y", "e"],
+    "j": ["j", "z"],
+    "k": ["k", "q", "c"],
+    "l": ["l", "r", "i"],
+    "m": ["m", "n"],
+    "n": ["n", "m"],
     "o": ["o", "u"],
-    "u": ["u", "o"],
+    "p": ["p", "b"],
+    "q": ["q", "k"],
     "r": ["r", "z", "x"],
     "s": ["s", "z", "x"],
-    "b": ["b", "v"],
-    "d": ["d", "t"],
-    "g": ["g", "q", "k"],
-    "k": ["k", "q"],
-    "l": ["l", "r"],
-    "n": ["n", "m"]
+    "t": ["t", "d"],
+    "u": ["u", "o"],
+    "v": ["v", "f"],
+    "w": ["w", "v"],
+    "x": ["x", "z", "s"],
+    "y": ["y", "i"],
+    "z": ["z", "s", "x"]
 }
 
+# Gaya acak tiap huruf
 def stylize(word):
     new_word = ""
-    for ch in word:
+    for ch in word.lower():
         if ch in stylized:
             new_word += random.choice(stylized[ch])
         else:
             new_word += ch
     return new_word
 
-BOT_TOKEN = "7827575711:AAFgns-tzy_zEWf48iFQycaaJuFy9ylkgBE"  # Ganti dengan token bot Telegram lo
+BOT_TOKEN = "7827575711:AAFgns-tzy_zEWf48iFQycaaJuFy9ylkgBE"
 CHECK_URL = "https://api.telegram.org/bot{}/getChat?username=@{}"
 
 def is_username_available(username):
@@ -56,9 +70,9 @@ def generate_usernames(kbbi_roots, n=10):
             usernames.add(styled)
     return list(usernames)
 
-# Telegram Bot Command
+# Bot Telegram
 async def generate(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    kbbi_roots = load_kbbi_roots()
+    kbbi_roots = load_kbbi()
     result = generate_usernames(kbbi_roots)
     reply = "\n".join(f"@{name}" for name in result)
     await update.message.reply_text(reply)
